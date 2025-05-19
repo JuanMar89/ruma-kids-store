@@ -1,0 +1,187 @@
+/* General */
+body {
+  font-family: 'Quicksand', sans-serif;
+  background-color: #000;
+  color: #fff;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #000 !important;
+}
+
+/* Carrusel */
+#Carrusel {
+  padding-top: 120px;
+}
+
+.carousel {
+  width: 100%;
+  height: 400px;
+  margin: 0 auto 50px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 20px;
+  animation: scroll-horizontal 10s linear infinite;
+  align-items: center;
+}
+
+@keyframes scroll-horizontal {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Tarjetas de Productos */
+.card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #333;
+  background-color: #111;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: none;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  opacity: 0;
+}
+
+/* Tarjeta visible */
+.card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(255,255,255,0.08);
+  opacity: 1;
+}
+
+.card img {
+  height: 250px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card img:hover {
+  transform: scale(1.05);
+}
+
+/* Contenido de la tarjeta */
+.card-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+  text-align: center;
+}
+
+/* Título */
+.card-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+  margin-bottom: 0.5rem;
+  line-height: 1.4em;
+  min-height: 2.8em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+}
+
+/* Precio */
+.precio {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #fff;
+  margin: 10px 0;
+  text-align: center;
+}
+
+/* Botón de compra */
+.btn-whatsapp {
+  display: block;
+  width: 100%;
+  background-color: #25D366;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 0;
+  margin-top: 10px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  text-align: center;
+}
+
+.btn-whatsapp:hover {
+  background-color: #1ebe57;
+  transform: scale(1.02);
+}
+
+/* Footer */
+footer {
+  background-color: #000;
+  color: white;
+  text-align: center;
+  padding: 30px 20px;
+}
+
+footer a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Mapa estilizado */
+iframe.mapa {
+  border-radius: 15px;
+  border: 2px solid #333;
+  width: 100%;
+  height: 400px;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(255,255,255,0.2);
+  cursor: pointer;
+}
+
+.lightbox::after {
+  content: '×';
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+}
