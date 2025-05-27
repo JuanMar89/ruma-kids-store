@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "rk_web",
+    "public": "public",
     "ignore": [
       "firebase.json",
       "**/.*",
