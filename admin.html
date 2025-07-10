@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Admin - Ruma Kids</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="img/lgo_rk.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f2f4f8;
+        }
+
+        h4,
+        h5 {
+            color: #333;
+        }
+
+        #admin-panel,
+        #login-container {
+            max-width: 100%;
+            margin: auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border: 1px solid #e0e0e0;
+            background-color: #ffffff;
+        }
+
+        .form-section h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        #form-wrapper {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        #form-wrapper.show {
+            max-height: 1000px;
+            /* suficiente para mostrar el contenido */
+        }
+
+        .imagenes-preview img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 4px;
+        }
+
+        .acciones-columna button {
+            font-size: 0.85rem;
+            margin-bottom: 0.4rem;
+        }
+
+        tbody tr {
+            background: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        tbody tr:hover {
+            background-color: #eef3f9;
+        }
+
+        input:focus,
+        textarea:focus {
+            box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
+            border-color: #86b7fe;
+            outline: none;
+        }
+
+        .table td,
+        .table th {
+            vertical-align: middle;
+            padding: 0.75rem;
+        }
+
+        .table td img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+
+        .stock-display {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            justify-items: center;
+        }
+
+        @media (max-width: 576px) {
+            .stock-display {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .stock-display .stock-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 6px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+            width: 80px;
+        }
+
+        .stock-display .stock-box label {
+            font-size: 0.7rem;
+            margin-bottom: 4px;
+        }
+
+        .stock-display .stock-box input {
+            width: 50px;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            thead {
+                display: none;
+            }
+
+            table,
+            tbody,
+            tr,
+            td {
+                display: block;
+                width: 100%;
+            }
+
+            tr {
+                margin-bottom: 1.5rem;
+                padding: 1rem;
+            }
+
+            td {
+                padding: 0.5rem 0;
+                border: none;
+            }
+
+            td[data-label]::before {
+                content: attr(data-label);
+                font-weight: 600;
+                display: block;
+                margin-bottom: 0.25rem;
+                color: #6c757d;
+                font-size: 0.85rem;
+            }
+
+            .acciones-columna {
+                display: flex;
+                justify-content: center;
+                gap: 0.5rem;
+                margin-top: 0.8rem;
+            }
+
+            .imagenes-col img {
+                width: 50px;
+                height: 50px;
+                object-fit: cover;
+                border-radius: 4px;
+                margin: 2px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="py-3">
+        <div id="login-container">
+            <h3 class="mb-3 text-center">Iniciar sesión</h3>
+            <form onsubmit="login(); return false;">
+                <input id="email" type="email" class="form-control mb-3" placeholder="Correo" autocomplete="username" />
+                <input id="password" type="password" class="form-control mb-4" placeholder="Contraseña"
+                    autocomplete="current-password" />
+                <button class="btn btn-primary w-100">Ingresar</button>
+            </form>
+        </div>
+        <div id="admin-panel" style="display:none;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="fw-bold text-primary">Panel de productos</h4>
+                <button class="btn btn-outline-dark btn-sm d-flex align-items-center gap-1" onclick="logout()">
+                    <i class="bi bi-box-arrow-right"></i> Salir
+                </button>
+            </div>
+            <div class="form-section mt-4">
+                <h5>Banner Promocional Rotativo</h5>
+                <label for="banner-mensajes" class="form-label">Mensajes (uno por línea)</label>
+                <textarea id="banner-mensajes" class="form-control mb-2" rows="5"
+                    placeholder="Ej: Envío gratis en compras desde $15.000\n3 cuotas sin interés"></textarea>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="banner-activo">
+                    <label class="form-check-label" for="banner-activo">Activar banner</label>
+                </div>
+                <button class="btn btn-primary" onclick="guardarBanner()">Guardar banner</button>
+            </div>
+            <button id="toggle-form-btn" class="btn btn-outline-primary w-100 mb-3">
+                <i class="bi bi-plus-circle"></i> Agregar producto
+            </button>
+            <div id="form-wrapper">
+                <form id="form-producto" class="mb-4">
+                    <h5 class="fw-bold mb-3 mt-4">Agregar nuevo producto</h5>
+                    <div class="form-section">
+                        <h5>Información del producto</h5>
+                        <div class="row g-2">
+                            <div class="col-md-8">
+                                <input required class="form-control" placeholder="Nombre del producto" id="nombre" />
+                            </div>
+                            <div class="col-md-4">
+                                <input required type="number" min="0" step="0.01" class="form-control"
+                                    placeholder="Precio" id="precio" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-section">
+                        <h5>Imágenes</h5>
+                        <input type="text" class="form-control mb-2" id="imagenes-url"
+                            placeholder="URLs separadas por coma" oninput="mostrarPreviewURLs()" />
+                        <div id="preview-imagenes" class="d-flex flex-wrap gap-2 mt-2"></div>
+                    </div>
+                    <div class="form-section">
+                        <h5>Stock por talle</h5>
+                        <div class="container px-0">
+                            <div class="row g-3 mb-2">
+                                <div class="col-12 col-sm-3">
+                                    <label for="stock-4" class="form-label">Talle 4</label>
+                                    <input id="stock-4" type="number" min="0" class="form-control form-control-sm" />
+                                </div>
+                                <div class="col-12 col-sm-4">
+                                    <label for="stock-6" class="form-label">Talle 6</label>
+                                    <input id="stock-6" type="number" min="0" class="form-control form-control-sm" />
+                                </div>
+                                <div class="col-12 col-sm-4">
+                                    <label for="stock-8" class="form-label">Talle 8</label>
+                                    <input id="stock-8" type="number" min="0" class="form-control form-control-sm" />
+                                </div>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-12 col-sm-4">
+                                    <label for="stock-10" class="form-label">Talle 10</label>
+                                    <input id="stock-10" type="number" min="0" class="form-control form-control-sm" />
+                                </div>
+                                <div class="col-12 col-sm-4">
+                                    <label for="stock-12" class="form-label">Talle 12</label>
+                                    <input id="stock-12" type="number" min="0" class="form-control form-control-sm" />
+                                </div>
+                                <div class="col-12 col-sm-4">
+                                    <label for="stock-14" class="form-label">Talle 14</label>
+                                    <input id="stock-14" type="number" min="0" class="form-control form-control-sm" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="btn-agregar" type="submit" class="btn btn-success w-100">
+                        Agregar producto
+                    </button>
+                </form>
+            </div>
+            <div class="mb-3">
+                <input type="text" id="buscador" class="form-control" placeholder="Buscar producto por nombre...">
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle text-center">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Imágenes</th>
+                            <th>Stock</th>
+                            <th>Carrusel</th>
+                            <th>Fecha</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-productos">
+                        <!-- generado dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="admin.js"></script>
+    <script>
+        const toggleBtn = document.getElementById("toggle-form-btn");
+        const formWrapper = document.getElementById("form-wrapper");
+        toggleBtn.addEventListener("click", () => {
+            formWrapper.classList.toggle("show");
+            toggleBtn.innerHTML = formWrapper.classList.contains("show")
+                ? '<i class="bi bi-dash-circle"></i> Ocultar formulario'
+                : '<i class="bi bi-plus-circle"></i> Agregar producto';
+        });
+    </script>
+</body>
+
+</html>

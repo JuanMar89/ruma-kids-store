@@ -1,0 +1,26 @@
+{
+  "name": "Ruma Kids",
+  "short_name": "Ruma",
+  "start_url": "/?source=pwa",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "orientation": "portrait",
+  "scope": "/",
+  "description": "Ropa moderna y cómoda para niñas. Moda infantil en Avellaneda, CABA.",
+  "lang": "es-AR",
+  "icons": [
+    {
+      "src": "/img/lgo_rk.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/img/lgo_rk_maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
